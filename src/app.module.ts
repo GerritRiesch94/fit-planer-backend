@@ -7,18 +7,16 @@ import { Athlete, AthleteSchema } from './athlete/database/athlete.schema';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AthleteDbServiceService } from './athlete/database/athlete-db-service.service';
 
+const MONGODB_URI = 'MONGODB_URI';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: `env/${process.env.NODE_ENV}.env` }),
     MongooseModule.forRootAsync({
-      imports: [
-        ConfigModule.forRoot({
-          envFilePath: `env/${process.env.NODE_ENV}.env`,
-        }),
-      ],
+      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
-        uri: config.get<string>('MONGODB_URI'),
+        uri: config.get<string>(MONGODB_URI),
       }),
     }),
     MongooseModule.forFeature([{ name: Athlete.name, schema: AthleteSchema }]),
