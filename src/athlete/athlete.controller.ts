@@ -1,26 +1,33 @@
-import { Controller, Get, HttpCode } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { AthleteResponse } from './model/response/AthleteResponse';
+import { AthleteDbServiceService } from './database/athlete-db-service.service';
+import { AthleteRequest } from './model/request/AthleteRequest';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('athlete')
 export class AthleteController {
+  constructor(private readonly athleteDbService: AthleteDbServiceService) {}
+
   @Get()
+  @ApiResponse({
+    status: 200,
+    type: AthleteResponse,
+    isArray: true,
+  })
   @HttpCode(200)
-  findAllAthletes(): AthleteResponse[] {
-    return [
-      {
-        combinedName: 'Stefan Sportler',
-        age: '32',
-        combinedAddress: 'Am Acker 31, 90469 Nürnberg',
-        email: 'stefan.sportler@live.de',
-        phoneNumber: '017612345678',
-      },
-      {
-        combinedName: 'Anna Athletin',
-        age: '40',
-        combinedAddress: 'Bergstraße 12, 90411Nürnberg',
-        email: 'anna.athletin@live.de',
-        phoneNumber: '016987654321',
-      },
-    ];
+  async findAllAthletes(): Promise<AthleteResponse[]> {
+    return await this.athleteDbService.findAll();
+  }
+
+  @Post()
+  @ApiResponse({
+    status: 201,
+    type: AthleteResponse,
+  })
+  @HttpCode(201)
+  async createAthlete(
+    @Body() athleteRequest: AthleteRequest,
+  ): Promise<AthleteResponse> {
+    return await this.athleteDbService.create(athleteRequest);
   }
 }
