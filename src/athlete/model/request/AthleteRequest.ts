@@ -12,7 +12,7 @@ class Address {
   @ApiProperty()
   city: string;
   @ApiProperty()
-  state?: string;
+  state: string;
   @ApiProperty()
   country: string;
 }
