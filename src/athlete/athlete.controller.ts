@@ -1,7 +1,10 @@
 import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { AthleteResponse } from './model/response/AthleteResponse';
 import { AthleteDbServiceService } from './database/athlete-db-service.service';
-import { AthleteRequest } from './model/request/AthleteRequest';
+import {
+  AthleteRequest,
+  mapToAthleteDbModel,
+} from './model/request/AthleteRequest';
 import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('athlete')
@@ -28,6 +31,8 @@ export class AthleteController {
   async createAthlete(
     @Body() athleteRequest: AthleteRequest,
   ): Promise<AthleteResponse> {
-    return await this.athleteDbService.create(athleteRequest);
+    return await this.athleteDbService.create(
+      mapToAthleteDbModel(athleteRequest),
+    );
   }
 }
