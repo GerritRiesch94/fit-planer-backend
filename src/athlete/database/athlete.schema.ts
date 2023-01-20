@@ -9,6 +9,8 @@ export class Athlete {
   @Prop()
   age: string;
   @Prop()
+  gender: string;
+  @Prop()
   combinedAddress: string;
   @Prop()
   email: string;

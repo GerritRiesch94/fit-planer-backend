@@ -49,9 +49,10 @@ describe('AthleteDbServiceService', () => {
     const savedAthlete = await service.create({
       combinedName: 'Stefan Sportler',
       age: '32',
-      combinedAddress: 'Am Acker 31, 90469 Nürnberg',
+      combinedAddress: 'Am Acker 31, 90555 Musterstadt',
       email: 'stefan.sportler@live.de',
       phoneNumber: '017612345678',
+      gender: 'm',
     });
 
     // assert
@@ -59,7 +60,8 @@ describe('AthleteDbServiceService', () => {
       expect.objectContaining({
         combinedName: 'Stefan Sportler',
         age: '32',
-        combinedAddress: 'Am Acker 31, 90469 Nürnberg',
+        gender: 'm',
+        combinedAddress: 'Am Acker 31, 90555 Musterstadt',
         email: 'stefan.sportler@live.de',
         phoneNumber: '017612345678',
       }),
@@ -71,7 +73,8 @@ describe('AthleteDbServiceService', () => {
     await new athleteModel({
       combinedName: 'Anna Athletin',
       age: '40',
-      combinedAddress: 'Bergstraße 12, 90411Nürnberg',
+      gender: 'f',
+      combinedAddress: 'Bergstraße 12, 90555 Musterstadt',
       email: 'anna.athletin@live.de',
       phoneNumber: '016987654321',
     }).save();
@@ -84,7 +87,8 @@ describe('AthleteDbServiceService', () => {
       expect.objectContaining({
         combinedName: 'Anna Athletin',
         age: '40',
-        combinedAddress: 'Bergstraße 12, 90411Nürnberg',
+        gender: 'f',
+        combinedAddress: 'Bergstraße 12, 90555 Musterstadt',
         email: 'anna.athletin@live.de',
         phoneNumber: '016987654321',
       }),

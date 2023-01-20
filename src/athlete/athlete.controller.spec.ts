@@ -1,6 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AthleteController } from './athlete.controller';
 import { AthleteDbServiceService } from './database/athlete-db-service.service';
+import { Athlete } from './database/athlete.schema';
+import { AthleteResponse } from './model/response/AthleteResponse';
+import { AthleteRequest } from './model/request/AthleteRequest';
 
 describe('AthleteController', () => {
   let controller: AthleteController;
@@ -46,21 +49,41 @@ describe('AthleteController', () => {
 
   it('should successfully create athlete for post api', async () => {
     // arrange
-    const athleteResponse = {
+    const athleteResponse: AthleteResponse = {
       combinedName: 'Stefan Sportler',
       age: '32',
-      combinedAddress: 'Am Acker 31, 90469 Nürnberg',
+      combinedAddress: 'Am Acker 31, EG, 90555 Musterstadt, Bavaria, Germany',
       email: 'stefan.sportler@live.de',
       phoneNumber: '017612345678',
     };
+
+    const mappedAthlete: Athlete = {
+      combinedName: 'Herr Stefan Sportler',
+      age: '32',
+      gender: 'm',
+      combinedAddress: 'Am Acker 31, EG, 90555 Musterstadt, Bavaria, Germany',
+      email: 'stefan.sportler@live.de',
+      phoneNumber: '017612345678',
+    };
+
     const createSpy = jest
       .spyOn(athleteDbServiceMock, 'create')
       .mockReturnValue(athleteResponse);
 
-    const athleteToCreate = {
-      combinedName: 'Stefan Sportler',
+    const athleteToCreate: AthleteRequest = {
+      title: 'Herr',
+      firstName: 'Stefan',
+      lastName: 'Sportler',
       age: '32',
-      combinedAddress: 'Am Acker 31, 90469 Nürnberg',
+      gender: 'm',
+      address: {
+        street: 'Am Acker 31',
+        addressAppendix: 'EG',
+        postCode: '90555',
+        city: 'Musterstadt',
+        state: 'Bavaria',
+        country: 'Germany',
+      },
       email: 'stefan.sportler@live.de',
       phoneNumber: '017612345678',
     };
@@ -72,6 +95,6 @@ describe('AthleteController', () => {
     // assert
     expect(result).toStrictEqual(athleteResponse);
     expect(createSpy).toHaveBeenCalledTimes(1);
-    expect(createSpy).toBeCalledWith(athleteToCreate);
+    expect(createSpy).toBeCalledWith(mappedAthlete);
   });
 });
