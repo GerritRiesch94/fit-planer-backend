@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AthleteController } from './athlete.controller';
-import { AthleteDbServiceService } from './database/athlete-db-service.service';
-import { Athlete } from './database/athlete.schema';
-import { AthleteResponse } from './model/response/AthleteResponse';
-import { AthleteRequest } from './model/request/AthleteRequest';
+import { AthleteDbServiceService } from '../database/athlete-db-service.service';
+import { Athlete } from '../database/athlete.schema';
+import { AthleteResponse } from '../model/response/AthleteResponse';
+import { AthleteRequest } from '../model/request/AthleteRequest';
 
 describe('AthleteController', () => {
   let controller: AthleteController;
