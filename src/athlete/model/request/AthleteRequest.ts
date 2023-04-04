@@ -1,7 +1,6 @@
-import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Athlete } from '../../database/athlete.schema';
 
-@ApiExtraModels()
 export class Address {
   @ApiProperty()
   street: string;
